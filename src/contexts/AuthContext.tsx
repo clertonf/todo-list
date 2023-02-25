@@ -6,6 +6,7 @@ import { UserDTO } from '@dtos/UserDTO';
 import { useToast } from 'native-base';
 
 export type AuthContextDataProps = {
+	user: UserDTO;
 	signIn: (email: string, password: string) => Promise<void>;
 	// signOut: () => Promise<void>;
 	isLoadingUserStorageData: boolean;
@@ -34,12 +35,11 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 					.doc(account.user.uid)
 					.get()
 					.then(async (profile) => {
-						const { name, tasks } = profile.data() as UserDTO;
+						const { tasks } = profile.data() as UserDTO;
 
 						if (profile.exists) {
 							const userData = {
 								id: account.user.uid,
-								name,
 								tasks,
 							};
 
@@ -91,6 +91,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 	return (
 		<AuthContext.Provider
 			value={{
+				user,
 				signIn,
 				// signOut,
 				isLoadingUserStorageData,

@@ -5,6 +5,7 @@ import {
 	ScrollView,
 	Skeleton,
 	Text,
+	useToast,
 	VStack,
 } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
@@ -12,6 +13,7 @@ import { AuthNavigatorRoutesProps } from '@routes/auth.routes';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import auth from '@react-native-firebase/auth';
 
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
@@ -19,32 +21,78 @@ import { Button } from '@components/Button';
 type FormDataProps = {
 	email: string;
 	password: string;
+	password_confirm: string;
 };
 
-const signInSchema = yup.object({
+const signUpSchema = yup.object({
 	email: yup.string().required('Informe o e-mail.').email('E-mail inválido.'),
 	password: yup
 		.string()
 		.required('Informe a senha.')
 		.min(6, 'A senha deve ter pelo menos 6 digitos.'),
+	password_confirm: yup
+		.string()
+		.required('Confirme a senha.')
+		.oneOf(
+			[yup.ref('password'), null as any],
+			'A confirmação da senha não confere'
+		),
 });
 
-const PHOTO_SIZE = 33;
-
 export function SignUp() {
-	const [photoIsLoading, setPhotoIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 	const navigation = useNavigation<AuthNavigatorRoutesProps>();
+	const toast = useToast();
 
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<FormDataProps>({
-		resolver: yupResolver(signInSchema),
+		resolver: yupResolver(signUpSchema),
 	});
 
 	function handleGoBack() {
 		navigation.navigate('signIn');
+	}
+
+	function handleCreateUserAccount({ email, password }: FormDataProps) {
+		setIsLoading(true);
+		auth()
+			.createUserWithEmailAndPassword(email, password)
+			.then(() => {
+				return toast.show({
+					title: 'Usuário criado com sucesso',
+					placement: 'top',
+					bgColor: 'green.700',
+				});
+			})
+			.catch((error) => {
+				if (error.code === 'auth/email-already-in-use') {
+					return toast.show({
+						title: 'E-mail já está sendo usado',
+						placement: 'top',
+						bgColor: 'red.500',
+					});
+				}
+
+				if (error.code === 'auth/invalid-email') {
+					return toast.show({
+						title: 'E-mail inválido',
+						placement: 'top',
+						bgColor: 'red.500',
+					});
+				}
+
+				if (error.code === 'auth/weak-password') {
+					return toast.show({
+						title: 'Senha deve ter ao menos 6 dígitos',
+						placement: 'top',
+						bgColor: 'red.500',
+					});
+				}
+			});
+		setIsLoading(false);
 	}
 
 	return (
@@ -97,14 +145,14 @@ export function SignUp() {
 
 					<Controller
 						control={control}
-						name="password"
+						name="password_confirm"
 						render={({ field: { onChange, value } }) => (
 							<Input
-								placeholder="Confirmar senha"
+								placeholder="Confirmar a senha"
 								secureTextEntry
 								onChangeText={onChange}
 								value={value}
-								errorMessage={errors.password?.message}
+								errorMessage={errors.password_confirm?.message}
 							/>
 						)}
 					/>
@@ -112,11 +160,11 @@ export function SignUp() {
 						title="Criar"
 						mt={2}
 						bgColor="gray.700"
-						onPress={() => {}}
+						onPress={handleSubmit(handleCreateUserAccount)}
 						_pressed={{
 							bgColor: 'gray.500',
 						}}
-						// isLoading={isLoading}
+						isLoading={isLoading}
 					/>
 				</Center>
 

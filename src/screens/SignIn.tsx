@@ -1,4 +1,11 @@
-import { Center, Heading, ScrollView, Text, VStack } from 'native-base';
+import {
+	Center,
+	Heading,
+	ScrollView,
+	Text,
+	useToast,
+	VStack,
+} from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { AuthNavigatorRoutesProps } from '@routes/auth.routes';
 import { useForm, Controller } from 'react-hook-form';
@@ -7,6 +14,9 @@ import * as yup from 'yup';
 
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
+import { useAuth } from '@hooks/useAuth';
+import { useState } from 'react';
+import { AppError } from '@utils/AppError';
 
 type FormDataProps = {
 	email: string;
@@ -22,7 +32,10 @@ const signInSchema = yup.object({
 });
 
 export function SignIn() {
+	const [isLoading, setIsLoading] = useState(false);
 	const navigation = useNavigation<AuthNavigatorRoutesProps>();
+	const { signIn, isLoadingUserStorageData } = useAuth();
+	const toast = useToast();
 
 	const {
 		control,
@@ -36,7 +49,16 @@ export function SignIn() {
 		navigation.navigate('signUp');
 	}
 
-	function handleSignIn() {}
+	async function handleSignIn({ email, password }: FormDataProps) {
+		try {
+			setIsLoading(true);
+			await signIn(email, password);
+		} catch (error) {
+			setIsLoading(false);
+		} finally {
+			setIsLoading(false);
+		}
+	}
 
 	return (
 		<ScrollView
@@ -97,7 +119,7 @@ export function SignIn() {
 					<Button
 						title="Acessar"
 						onPress={handleSubmit(handleSignIn)}
-						// isLoading={isLoading}
+						isLoading={isLoading}
 					/>
 				</Center>
 			</VStack>

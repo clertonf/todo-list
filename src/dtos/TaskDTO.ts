@@ -3,4 +3,5 @@ export type TaskDTO = {
 	title: string;
 	description: string;
 	date: string;
+	userUid?: string;
 };

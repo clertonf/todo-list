@@ -31,7 +31,7 @@ export function Input({
 				fontSize="md"
 				color="gray.700"
 				fontFamily="body"
-				mb={4}
+				mb={2}
 				placeholderTextColor="gray.400"
 				isInvalid={invalid}
 				_invalid={{

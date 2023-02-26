@@ -50,14 +50,7 @@ export function SignIn() {
 	}
 
 	async function handleSignIn({ email, password }: FormDataProps) {
-		try {
-			setIsLoading(true);
-			await signIn(email, password);
-		} catch (error) {
-			setIsLoading(false);
-		} finally {
-			setIsLoading(false);
-		}
+		await signIn(email, password);
 	}
 
 	return (

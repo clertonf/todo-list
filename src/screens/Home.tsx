@@ -1,17 +1,21 @@
-import { Button } from '@components/Button';
-import { Header } from '@components/Header';
-import { useEffect, useState } from 'react';
-import { Tasks } from '@components/Tasks';
-import { TaskDTO } from '@dtos/TaskDTO';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { Center, FlatList, Text, VStack } from 'native-base';
-import firestore from '@react-native-firebase/firestore';
+import React, { useEffect, useState } from 'react';
 
-import { AppNavigatorRoutesProps } from '@routes/app.routes';
+import { useNavigation } from '@react-navigation/native';
+import { FlatList, Text, VStack } from 'native-base';
+import firestore from '@react-native-firebase/firestore';
+import { useDispatch } from 'react-redux';
+
 import { useAuth } from '@hooks/useAuth';
 import { Loading } from '@components/Loading';
+import { chooseSetTask } from '../reducers/infoTask';
+import { Button } from '@components/Button';
+import { Header } from '@components/Header';
+import { Tasks } from '@components/Tasks';
+import { TaskDTO } from '@dtos/TaskDTO';
+import { AppNavigatorRoutesProps } from '@routes/app.routes';
 
 export function Home() {
+	const dispatch = useDispatch();
 	const navigation = useNavigation<AppNavigatorRoutesProps>();
 	const [tasks, setTasks] = useState<TaskDTO[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -36,8 +40,9 @@ export function Home() {
 		return () => subscribe();
 	}, []);
 
-	function handleOpenTaskDetails(id: string) {
-		navigation.navigate('taskDetails', { id });
+	function handleOpenTaskDetails(item: TaskDTO) {
+		dispatch(chooseSetTask(item));
+		navigation.navigate('taskDetails');
 	}
 
 	function handleNavigateForCreateNewTask() {
@@ -55,7 +60,7 @@ export function Home() {
 					data={tasks}
 					keyExtractor={(item) => String(item.id)}
 					renderItem={({ item }) => (
-						<Tasks data={item} onPress={() => handleOpenTaskDetails(item.id)} />
+						<Tasks data={item} onPress={() => handleOpenTaskDetails(item)} />
 					)}
 					_contentContainerStyle={{
 						paddingBottom: 30,

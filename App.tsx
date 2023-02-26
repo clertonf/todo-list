@@ -1,4 +1,5 @@
 import { StatusBar } from 'react-native';
+import { PersistGate } from 'redux-persist/es/integration/react';
 import { NativeBaseProvider } from 'native-base';
 import {
 	useFonts,
@@ -10,20 +11,26 @@ import { Routes } from './src/routes';
 import { THEME } from './src/themes';
 import { Loading } from '@components/Loading';
 import { AuthContextProvider } from '@contexts/AuthContext';
+import { persistor, store } from './src/store';
+import { Provider } from 'react-redux';
 
 export default function App() {
 	const [fontsLoaded] = useFonts({ Karla_400Regular, Karla_700Bold });
 
 	return (
-		<NativeBaseProvider theme={THEME}>
-			<StatusBar
-				barStyle="dark-content"
-				backgroundColor="transparent"
-				translucent
-			/>
-			<AuthContextProvider>
-				{fontsLoaded ? <Routes /> : <Loading />}
-			</AuthContextProvider>
-		</NativeBaseProvider>
+		<Provider store={store}>
+			<PersistGate persistor={persistor}>
+				<NativeBaseProvider theme={THEME}>
+					<StatusBar
+						barStyle="dark-content"
+						backgroundColor="transparent"
+						translucent
+					/>
+					<AuthContextProvider>
+						{fontsLoaded ? <Routes /> : <Loading />}
+					</AuthContextProvider>
+				</NativeBaseProvider>
+			</PersistGate>
+		</Provider>
 	);
 }

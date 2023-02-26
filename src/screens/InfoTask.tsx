@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {
 	AlertDialog,
@@ -7,26 +7,19 @@ import {
 	HStack,
 	Icon,
 	ScrollView,
-	Skeleton,
-	Text,
 	Button as ButtonAlertDialog,
 	useToast,
 	VStack,
 } from 'native-base';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Feather } from '@expo/vector-icons';
 import DatePicker from 'react-native-date-picker';
+import { useSelector } from 'react-redux';
 
-import moment from 'moment';
-import 'moment/locale/pt';
-
-import {
-	AppNavigatorRoutesProps,
-	TaskNavigationProps,
-} from '@routes/app.routes';
+import { AppNavigatorRoutesProps } from '@routes/app.routes';
 
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
@@ -43,9 +36,6 @@ const signUpSchema = yup.object({
 });
 
 export function InfoTask() {
-	const route = useRoute();
-	const { id } = route.params as TaskNavigationProps;
-
 	const toast = useToast();
 
 	const [isLoading, setIsLoading] = useState(false);
@@ -60,11 +50,19 @@ export function InfoTask() {
 
 	const [open, setOpen] = useState(false);
 
-	const dateString = '26/06/2023'; // Oct 23
+	const currentTask: TaskDTO = useSelector(
+		(state: any) => state.reducerInfoTask.infoTask
+	);
+
+	const dateString = currentTask.date;
 	const newData = dateString.replace(/(\d+[/])(\d+[/])/, '$2$1');
 	const data = new Date(newData);
 
 	const [newDate, setNewDate] = useState(data);
+
+	useEffect(() => {
+		setTask(currentTask);
+	}, []);
 
 	const {
 		control,
@@ -81,7 +79,7 @@ export function InfoTask() {
 	}
 
 	function handleDeleteCurrentTask() {
-		firestore().collection('tasks').doc(id).delete();
+		firestore().collection('tasks').doc(currentTask.id).delete();
 
 		navigation.navigate('home');
 
@@ -95,7 +93,7 @@ export function InfoTask() {
 	function handleUpdateCurrentTask({ title, description }: TaskDTO) {
 		firestore()
 			.collection('tasks')
-			.doc(id)
+			.doc(currentTask.id)
 			.update({
 				title,
 				description,
@@ -110,19 +108,6 @@ export function InfoTask() {
 				});
 			});
 	}
-
-	useEffect(() => {
-		if (id) {
-			firestore()
-				.collection('tasks')
-				.doc(id)
-				.get()
-				.then((response) => {
-					const currentTask = response.data() as TaskDTO;
-					setTask(currentTask);
-				});
-		}
-	}, [id]);
 
 	function handleUndoChanges() {
 		if (task === undefined) {
@@ -250,7 +235,7 @@ export function InfoTask() {
 					{editTask ? (
 						<>
 							<Button
-								title="Editar"
+								title="Atualizar"
 								onPress={handleSubmit(handleUpdateCurrentTask)}
 								mb={4}
 								isLoading={isLoading}

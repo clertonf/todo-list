@@ -15,6 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import auth from '@react-native-firebase/auth';
 
+import { useAuth } from '@hooks/useAuth';
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
 
@@ -40,6 +41,7 @@ const signUpSchema = yup.object({
 });
 
 export function SignUp() {
+	const { signIn } = useAuth();
 	const [isLoading, setIsLoading] = useState(false);
 	const navigation = useNavigation<AuthNavigatorRoutesProps>();
 	const toast = useToast();
@@ -61,6 +63,7 @@ export function SignUp() {
 		auth()
 			.createUserWithEmailAndPassword(email, password)
 			.then(() => {
+				signIn(email, password);
 				return toast.show({
 					title: 'Usuário criado com sucesso',
 					placement: 'top',

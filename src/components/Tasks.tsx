@@ -1,18 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 
-import {
-	AlertDialog,
-	Button,
-	Heading,
-	HStack,
-	Image,
-	VStack,
-	Text,
-	Icon,
-	Menu,
-} from 'native-base';
+import { Heading, HStack, VStack, Text } from 'native-base';
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import { TaskDTO } from '@dtos/TaskDTO';
 
 type Props = TouchableOpacityProps & {
@@ -21,12 +10,6 @@ type Props = TouchableOpacityProps & {
 };
 
 export function Tasks({ data, onPress, ...rest }: Props) {
-	const [isOpen, setIsOpen] = useState(false);
-
-	const onClose = () => setIsOpen(false);
-
-	const cancelRef = useRef(null);
-
 	return (
 		<TouchableOpacity onPress={onPress} {...rest}>
 			<HStack
@@ -46,25 +29,13 @@ export function Tasks({ data, onPress, ...rest }: Props) {
 						</Heading>
 					</VStack>
 
-					<Text
-						fontSize="sm"
-						color="gray.300"
-						mt={1}
-						numberOfLines={2}
-						textTransform="capitalize"
-					>
+					<Text fontSize="sm" color="gray.300" mt={1} numberOfLines={2}>
 						{data.description}
 					</Text>
 
-					{/* <Text
-						fontSize="md"
-						color="blue.400"
-						mt={1}
-						numberOfLines={2}
-						textTransform="capitalize"
-					>
-						21/02/1999
-					</Text> */}
+					<Text fontSize="md" color="blue.400" mt={1}>
+						{data.date}
+					</Text>
 				</VStack>
 			</HStack>
 		</TouchableOpacity>

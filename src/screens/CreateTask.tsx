@@ -1,11 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
 	Center,
 	Heading,
 	Icon,
 	ScrollView,
-	Skeleton,
-	Text,
 	useToast,
 	VStack,
 } from 'native-base';

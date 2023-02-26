@@ -7,14 +7,10 @@ import { CreateTask } from '@screens/CreateTask';
 import { Home } from '@screens/Home';
 import { InfoTask } from '@screens/InfoTask';
 
-export type TaskNavigationProps = {
-	id?: string;
-};
-
 type AppRoutesProps = {
 	home: undefined;
 	createNewTask: undefined;
-	taskDetails: TaskNavigationProps;
+	taskDetails: undefined;
 };
 
 export type AppNavigatorRoutesProps = NativeStackNavigationProp<AppRoutesProps>;

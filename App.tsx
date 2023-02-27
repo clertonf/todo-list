@@ -2,7 +2,7 @@ import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StatusBar } from 'react-native';
 import { PersistGate } from 'redux-persist/es/integration/react';
-import { NativeBaseProvider } from 'native-base';
+import { NativeBaseProvider, useTheme } from 'native-base';
 import { useSelector } from 'react-redux';
 import {
 	useFonts,
@@ -22,13 +22,18 @@ export default function App() {
 	const { theme } = useSelector((state: any) => state.reducerTheme);
 	const [fontsLoaded] = useFonts({ Karla_400Regular, Karla_700Bold });
 
+	const verifyTheme = () => {
+		if (theme === 'themeDark') return 'light-content';
+		else return 'dark-content';
+	};
+
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
 			<PersistGate persistor={persistor}>
 				<NativeBaseProvider theme={createTheme(theme)}>
 					<StatusBar
-						barStyle="dark-content"
-						backgroundColor="transparent"
+						barStyle={verifyTheme()}
+						backgroundColor={theme !== 'themeDark' ? 'transparent' : '#bbbbb'}
 						translucent
 					/>
 					<AuthContextProvider>

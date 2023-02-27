@@ -36,6 +36,9 @@
       ],
       "@reducers/*": [
         "./src/reducers/*"
+      ],
+      "@themes/*": [
+        "./src/themes/*"
       ]
     }
   }

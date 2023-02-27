@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {
-	AlertDialog,
 	Center,
 	Heading,
 	HStack,
 	Icon,
 	ScrollView,
-	Button as ButtonAlertDialog,
 	useToast,
 	VStack,
 } from 'native-base';
@@ -25,6 +23,7 @@ import { Input } from '@components/Input';
 import { Button } from '@components/Button';
 import { Header } from '@components/Header';
 import { TaskDTO } from '@dtos/TaskDTO';
+import { ModalAlert } from '@components/ModalAlert';
 
 const signUpSchema = yup.object({
 	title: yup
@@ -139,7 +138,7 @@ export function InfoTask() {
 			<VStack flex={1} mt={6} px={4}>
 				<Center>
 					<Heading
-						color="gray.500"
+						color="gray.600"
 						fontSize="lg"
 						mb={2}
 						alignSelf="flex-start"
@@ -164,7 +163,7 @@ export function InfoTask() {
 						)}
 					/>
 					<Heading
-						color="gray.500"
+						color="gray.600"
 						fontSize="lg"
 						mb={2}
 						alignSelf="flex-start"
@@ -191,7 +190,7 @@ export function InfoTask() {
 					/>
 
 					<Heading
-						color="gray.500"
+						color="gray.600"
 						fontSize="lg"
 						mb={2}
 						alignSelf="flex-start"
@@ -247,10 +246,6 @@ export function InfoTask() {
 										color="white"
 									/>
 								}
-								bgColor="gray.700"
-								_pressed={{
-									bgColor: 'gray.500',
-								}}
 							/>
 
 							<Button
@@ -310,37 +305,15 @@ export function InfoTask() {
 				</VStack>
 			</VStack>
 
-			<AlertDialog
+			<ModalAlert
 				leastDestructiveRef={cancelRef}
 				isOpen={isOpen}
 				onClose={onClose}
-			>
-				<AlertDialog.Content>
-					<AlertDialog.CloseButton />
-					<AlertDialog.Header>Deletar tarefa</AlertDialog.Header>
-					<AlertDialog.Body>
-						Deseja realmente deletar a tarefa atual?
-					</AlertDialog.Body>
-					<AlertDialog.Footer>
-						<ButtonAlertDialog.Group space={2}>
-							<ButtonAlertDialog
-								variant="unstyled"
-								colorScheme="coolGray"
-								onPress={onClose}
-								ref={cancelRef}
-							>
-								Cancelar
-							</ButtonAlertDialog>
-							<ButtonAlertDialog
-								colorScheme="danger"
-								onPress={handleDeleteCurrentTask}
-							>
-								Deletar
-							</ButtonAlertDialog>
-						</ButtonAlertDialog.Group>
-					</AlertDialog.Footer>
-				</AlertDialog.Content>
-			</AlertDialog>
+				onPress={handleDeleteCurrentTask}
+				title="Deletar tarefa"
+				subtitle="Deseja realmente deletar a tarefa atual?"
+				alertTitleButton="Sair"
+			/>
 		</ScrollView>
 	);
 }

@@ -162,7 +162,7 @@ export function SignUp() {
 					<Button
 						title="Criar"
 						mt={2}
-						bgColor="gray.700"
+						bgColor="gray.800"
 						onPress={handleSubmit(handleCreateUserAccount)}
 						_pressed={{
 							bgColor: 'gray.500',

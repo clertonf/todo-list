@@ -1,16 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import {
-	HStack,
-	Heading,
-	VStack,
-	Text,
-	Icon,
-	AlertDialog,
-	Button,
-} from 'native-base';
+import { HStack, Heading, VStack, Icon } from 'native-base';
 import { useAuth } from '@hooks/useAuth';
+import { ModalAlert } from './ModalAlert';
+import { DarkMode } from './DarkMode';
 
 type HeaderProps = {
 	title: string;
@@ -18,11 +12,7 @@ type HeaderProps = {
 	showButtonLogout?: boolean;
 };
 
-export function Header({
-	title,
-	subtitle,
-	showButtonLogout = false,
-}: HeaderProps) {
+export function Header({ title, showButtonLogout = false }: HeaderProps) {
 	const { signOut } = useAuth();
 
 	const [isOpen, setIsOpen] = useState(false);
@@ -35,45 +25,25 @@ export function Header({
 				<Heading color="gray.700" fontSize="lg" fontFamily="heading">
 					{title}
 				</Heading>
-				<Text color="gray.700" fontSize="md">
-					{subtitle}
-				</Text>
+
+				<DarkMode mt={2} />
 			</VStack>
 
 			{showButtonLogout && (
 				<TouchableOpacity onPress={() => setIsOpen(true)}>
-					<Icon as={MaterialIcons} name="logout" color="white.100" size={7} />
+					<Icon as={MaterialIcons} name="logout" color="red.300" size={7} />
 				</TouchableOpacity>
 			)}
 
-			<AlertDialog
+			<ModalAlert
 				leastDestructiveRef={cancelRef}
 				isOpen={isOpen}
 				onClose={onClose}
-			>
-				<AlertDialog.Content>
-					<AlertDialog.CloseButton />
-					<AlertDialog.Header>Deletar tarefa</AlertDialog.Header>
-					<AlertDialog.Body>
-						Deseja realmente sair do aplicativo ?
-					</AlertDialog.Body>
-					<AlertDialog.Footer>
-						<Button.Group space={2}>
-							<Button
-								variant="unstyled"
-								colorScheme="coolGray"
-								onPress={onClose}
-								ref={cancelRef}
-							>
-								Cancelar
-							</Button>
-							<Button colorScheme="danger" onPress={signOut}>
-								Sair
-							</Button>
-						</Button.Group>
-					</AlertDialog.Footer>
-				</AlertDialog.Content>
-			</AlertDialog>
+				onPress={signOut}
+				title="Sair do app"
+				subtitle="Deseja realmente sair do aplicativo ?"
+				alertTitleButton="Sair"
+			/>
 		</HStack>
 	);
 }

@@ -19,6 +19,7 @@ module.exports = function(api) {
             '@contexts': './src/contexts',
             '@routes': './src/routes',
             '@reducers': './src/reducers',
+            '@themes': './src/themes',
           }
         },
       ],

@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import thunk from 'redux-thunk';
 
 import { reducerInfoTask } from '../reducers/infoTask';
+import { reducerTheme } from '../reducers/themes';
 
 const persistConfig = {
 	key: 'root',
@@ -15,6 +16,7 @@ const persistConfig = {
 
 const reducer = combineReducers({
 	reducerInfoTask,
+	reducerTheme,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

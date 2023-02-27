@@ -16,7 +16,7 @@ export function Button({ title, variant = 'solid', ...rest }: ButtonProps) {
 			borderColor="gray.300"
 			rounded="sm"
 			_pressed={{
-				bg: variant === 'outline' ? 'gray.200' : 'blue.500',
+				bg: variant === 'outline' ? 'gray.200' : 'gray.1000',
 			}}
 			borderRadius={6}
 			{...rest}

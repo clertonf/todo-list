@@ -24,7 +24,7 @@ export function Tasks({ data, onPress, ...rest }: Props) {
 			>
 				<VStack flex={1}>
 					<VStack flexDirection="row" justifyContent="space-between">
-						<Heading fontSize="md" color="white" fontFamily="heading">
+						<Heading fontSize="md" color="gray.200" fontFamily="heading">
 							{data.title}
 						</Heading>
 					</VStack>
@@ -33,7 +33,7 @@ export function Tasks({ data, onPress, ...rest }: Props) {
 						{data.description}
 					</Text>
 
-					<Text fontSize="md" color="blue.400" mt={1}>
+					<Text fontSize="md" color="gray.100" mt={1}>
 						{data.date}
 					</Text>
 				</VStack>

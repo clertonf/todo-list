@@ -8,29 +8,29 @@ import {
 } from '@expo-google-fonts/karla';
 
 import { Routes } from './src/routes';
-import { THEME } from './src/themes';
+
 import { Loading } from '@components/Loading';
 import { AuthContextProvider } from '@contexts/AuthContext';
 import { persistor, store } from './src/store';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
+import { createTheme } from '@utils/Theme';
 
 export default function App() {
+	const { theme } = useSelector((state: any) => state.reducerTheme);
 	const [fontsLoaded] = useFonts({ Karla_400Regular, Karla_700Bold });
 
 	return (
-		<Provider store={store}>
-			<PersistGate persistor={persistor}>
-				<NativeBaseProvider theme={THEME}>
-					<StatusBar
-						barStyle="dark-content"
-						backgroundColor="transparent"
-						translucent
-					/>
-					<AuthContextProvider>
-						{fontsLoaded ? <Routes /> : <Loading />}
-					</AuthContextProvider>
-				</NativeBaseProvider>
-			</PersistGate>
-		</Provider>
+		<PersistGate persistor={persistor}>
+			<NativeBaseProvider theme={createTheme(theme)}>
+				<StatusBar
+					barStyle="dark-content"
+					backgroundColor="transparent"
+					translucent
+				/>
+				<AuthContextProvider>
+					{fontsLoaded ? <Routes /> : <Loading />}
+				</AuthContextProvider>
+			</NativeBaseProvider>
+		</PersistGate>
 	);
 }

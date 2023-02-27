@@ -131,10 +131,7 @@ export function InfoTask() {
 			backgroundColor="gray.200"
 			showsVerticalScrollIndicator={false}
 		>
-			<Header
-				title="Detalhes da tarefa"
-				subtitle="Logo abaixo, você verá os detalhes da tarefa. Poderá editar ou excluir 😃"
-			/>
+			<Header title="Detalhes da tarefa" showButtonLogout />
 			<VStack flex={1} mt={6} px={4}>
 				<Center>
 					<Heading

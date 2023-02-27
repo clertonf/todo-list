@@ -15,8 +15,6 @@ import * as yup from 'yup';
 import DatePicker from 'react-native-date-picker';
 import { Feather } from '@expo/vector-icons';
 
-import { AppNavigatorRoutesProps } from '@routes/app.routes';
-
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
 import { Header } from '@components/Header';
@@ -34,7 +32,7 @@ const signUpSchema = yup.object({
 export function CreateTask() {
 	const { user } = useAuth();
 	const [isLoading, setIsLoading] = useState(false);
-	const navigation = useNavigation<AppNavigatorRoutesProps>();
+	const navigation = useNavigation();
 	const toast = useToast();
 
 	const [newDate, setNewDate] = useState(new Date());
@@ -86,10 +84,7 @@ export function CreateTask() {
 			backgroundColor="gray.200"
 			showsVerticalScrollIndicator={false}
 		>
-			<Header
-				title="Registrar tarefa"
-				subtitle="Informe os campos abaixo para cadastrar uma nova tarefa"
-			/>
+			<Header title="Registrar tarefa" showButtonLogout />
 			<VStack flex={1} mt={6} px={4}>
 				<Center>
 					<Heading

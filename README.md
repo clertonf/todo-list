@@ -144,10 +144,6 @@ Desafio elaborado pela Doctuz, cujo a finalidade é desenvolver um To-do list em
 
 ---
 
-# 💬 Configure seu Git
-
-1. É necessário modificar suas configurações do Git, para que fique o email do Lead nas suas configurações, para quando for fazer commits e demais modificações no projeto, faça com o e-mail do Lead. Pode ser seguido esse tutorial: [pasta](https://git-scm.com/book/pt-br/v2/Come%C3%A7ando-Configura%C3%A7%C3%A3o-Inicial-do-Git).
-
 ---
 
 ## 🧪 Executando testes na aplicação

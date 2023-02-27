@@ -17,6 +17,7 @@ import { Button } from '@components/Button';
 import { useAuth } from '@hooks/useAuth';
 import { useState } from 'react';
 import { AppError } from '@utils/AppError';
+import { DarkMode } from '@components/DarkMode';
 
 type FormDataProps = {
 	email: string;
@@ -50,7 +51,10 @@ export function SignIn() {
 	}
 
 	async function handleSignIn({ email, password }: FormDataProps) {
+		setIsLoading(true);
 		await signIn(email, password);
+
+		setIsLoading(false);
 	}
 
 	return (
@@ -67,6 +71,7 @@ export function SignIn() {
 				borderBottomRightRadius={24}
 			>
 				<Center my={24}>
+					<DarkMode mb={2} />
 					<Heading color="gray.700" fontSize="4xl" fontFamily="heading">
 						to-do list
 					</Heading>
@@ -126,6 +131,7 @@ export function SignIn() {
 					title="Criar conta"
 					variant="outline"
 					onPress={handleNewAccount}
+					bgColor="special_button"
 				/>
 			</Center>
 		</ScrollView>

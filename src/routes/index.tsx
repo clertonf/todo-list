@@ -1,10 +1,11 @@
-import { Loading } from '@components/Loading';
-import { useAuth } from '@hooks/useAuth';
+import React from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { useTheme, Box } from 'native-base';
-import { AppRoutes } from './app.routes';
 
+import { Loading } from '@components/Loading';
+import { useAuth } from '@hooks/useAuth';
 import { AuthRoutes } from './auth.routes';
+import { AppRoutes } from './app.routes';
 
 export function Routes() {
 	const { colors } = useTheme();

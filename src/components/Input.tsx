@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import {
 	Input as NativeBaseInput,

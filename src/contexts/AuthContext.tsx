@@ -1,10 +1,9 @@
-import { createContext, ReactNode, useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import React, { createContext, ReactNode, useEffect, useState } from 'react';
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
-import { UserDTO } from '@dtos/UserDTO';
 import { useToast } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { UserDTO } from '@dtos/UserDTO';
 
 export type AuthContextDataProps = {
 	user: UserDTO;
@@ -38,12 +37,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 				setUser(userData as UserDTO);
 
 				await AsyncStorage.setItem(USER_COLLECTION, JSON.stringify(userData));
-
-				return toast.show({
-					title: 'Login efetuado com sucesso',
-					placement: 'top',
-					bgColor: 'green.500',
-				});
 			})
 
 			.catch((error) => {

@@ -33,6 +33,12 @@
       ],
       "@routes/*": [
         "./src/routes/*"
+      ],
+      "@reducers/*": [
+        "./src/reducers/*"
+      ],
+      "@themes/*": [
+        "./src/themes/*"
       ]
     }
   }

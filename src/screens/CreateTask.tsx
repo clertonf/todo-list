@@ -1,11 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
 	Center,
 	Heading,
 	Icon,
 	ScrollView,
-	Skeleton,
-	Text,
 	useToast,
 	VStack,
 } from 'native-base';
@@ -95,7 +93,7 @@ export function CreateTask() {
 			<VStack flex={1} mt={6} px={4}>
 				<Center>
 					<Heading
-						color="gray.500"
+						color="gray.600"
 						fontSize="lg"
 						mb={2}
 						alignSelf="flex-start"
@@ -119,7 +117,7 @@ export function CreateTask() {
 						)}
 					/>
 					<Heading
-						color="gray.500"
+						color="gray.600"
 						fontSize="lg"
 						mb={2}
 						alignSelf="flex-start"
@@ -145,7 +143,7 @@ export function CreateTask() {
 					/>
 
 					<Heading
-						color="gray.500"
+						color="gray.600"
 						fontSize="lg"
 						mb={2}
 						alignSelf="flex-start"

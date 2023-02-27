@@ -8,11 +8,15 @@ import { DarkMode } from './DarkMode';
 
 type HeaderProps = {
 	title: string;
-	subtitle: string;
 	showButtonLogout?: boolean;
+	showButtonDarkMode?: boolean;
 };
 
-export function Header({ title, showButtonLogout = false }: HeaderProps) {
+export function Header({
+	title,
+	showButtonLogout = false,
+	showButtonDarkMode = false,
+}: HeaderProps) {
 	const { signOut } = useAuth();
 
 	const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +30,7 @@ export function Header({ title, showButtonLogout = false }: HeaderProps) {
 					{title}
 				</Heading>
 
-				<DarkMode mt={2} />
+				{showButtonDarkMode && <DarkMode mt={2} />}
 			</VStack>
 
 			{showButtonLogout && (

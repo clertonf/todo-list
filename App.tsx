@@ -1,6 +1,9 @@
+import React from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StatusBar } from 'react-native';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import { NativeBaseProvider } from 'native-base';
+import { useSelector } from 'react-redux';
 import {
 	useFonts,
 	Karla_400Regular,
@@ -11,8 +14,8 @@ import { Routes } from './src/routes';
 
 import { Loading } from '@components/Loading';
 import { AuthContextProvider } from '@contexts/AuthContext';
-import { persistor, store } from './src/store';
-import { Provider, useSelector } from 'react-redux';
+import { persistor } from './src/store';
+
 import { createTheme } from '@utils/Theme';
 
 export default function App() {
@@ -20,17 +23,19 @@ export default function App() {
 	const [fontsLoaded] = useFonts({ Karla_400Regular, Karla_700Bold });
 
 	return (
-		<PersistGate persistor={persistor}>
-			<NativeBaseProvider theme={createTheme(theme)}>
-				<StatusBar
-					barStyle="dark-content"
-					backgroundColor="transparent"
-					translucent
-				/>
-				<AuthContextProvider>
-					{fontsLoaded ? <Routes /> : <Loading />}
-				</AuthContextProvider>
-			</NativeBaseProvider>
-		</PersistGate>
+		<GestureHandlerRootView style={{ flex: 1 }}>
+			<PersistGate persistor={persistor}>
+				<NativeBaseProvider theme={createTheme(theme)}>
+					<StatusBar
+						barStyle="dark-content"
+						backgroundColor="transparent"
+						translucent
+					/>
+					<AuthContextProvider>
+						{fontsLoaded ? <Routes /> : <Loading />}
+					</AuthContextProvider>
+				</NativeBaseProvider>
+			</PersistGate>
+		</GestureHandlerRootView>
 	);
 }

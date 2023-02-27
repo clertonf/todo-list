@@ -62,6 +62,7 @@ export function SignIn() {
 			contentContainerStyle={{ flexGrow: 1 }}
 			backgroundColor="gray.100"
 			showsVerticalScrollIndicator={false}
+			testID="signInScreen"
 		>
 			<VStack
 				flex={1}
@@ -90,6 +91,7 @@ export function SignIn() {
 						name="email"
 						render={({ field: { onChange, value } }) => (
 							<Input
+								testID="email-input"
 								placeholder="E-mail"
 								keyboardType="email-address"
 								autoCapitalize="none"
@@ -106,6 +108,7 @@ export function SignIn() {
 						name="password"
 						render={({ field: { onChange, value } }) => (
 							<Input
+								testID="password-input"
 								placeholder="Senha"
 								secureTextEntry
 								onChangeText={onChange}
@@ -116,6 +119,7 @@ export function SignIn() {
 					/>
 					<Button
 						title="Acessar"
+						testID="submit-button"
 						onPress={handleSubmit(handleSignIn)}
 						isLoading={isLoading}
 					/>

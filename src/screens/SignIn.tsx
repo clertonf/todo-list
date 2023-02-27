@@ -1,11 +1,4 @@
-import {
-	Center,
-	Heading,
-	ScrollView,
-	Text,
-	useToast,
-	VStack,
-} from 'native-base';
+import { Center, Heading, ScrollView, Text, VStack } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { AuthNavigatorRoutesProps } from '@routes/auth.routes';
 import { useForm, Controller } from 'react-hook-form';
@@ -16,7 +9,6 @@ import { Input } from '@components/Input';
 import { Button } from '@components/Button';
 import { useAuth } from '@hooks/useAuth';
 import { useState } from 'react';
-import { AppError } from '@utils/AppError';
 import { DarkMode } from '@components/DarkMode';
 
 type FormDataProps = {
@@ -35,8 +27,7 @@ const signInSchema = yup.object({
 export function SignIn() {
 	const [isLoading, setIsLoading] = useState(false);
 	const navigation = useNavigation<AuthNavigatorRoutesProps>();
-	const { signIn, isLoadingUserStorageData } = useAuth();
-	const toast = useToast();
+	const { signIn } = useAuth();
 
 	const {
 		control,
@@ -53,8 +44,6 @@ export function SignIn() {
 	async function handleSignIn({ email, password }: FormDataProps) {
 		setIsLoading(true);
 		await signIn(email, password);
-
-		setIsLoading(false);
 	}
 
 	return (

@@ -52,6 +52,9 @@ Desafio elaborado pela Doctuz, cujo a finalidade é desenvolver um To-do list em
 - [react-native-date-picker](https://github.com/henninghall/react-native-date-picker):
   É um componente selecionador de data para React Native.
 
+- [Moment](https://momentjs.com/):
+  É uma biblioteca utilizada para manipular datas.
+
 ---
 
 ## 💬 Bibliotecas utilizadas para desenvolvimento

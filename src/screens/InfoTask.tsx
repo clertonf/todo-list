@@ -25,6 +25,9 @@ import { Header } from '@components/Header';
 import { TaskDTO } from '@dtos/TaskDTO';
 import { ModalAlert } from '@components/ModalAlert';
 
+import moment from 'moment';
+import 'moment/locale/pt';
+
 const signUpSchema = yup.object({
 	title: yup
 		.string()
@@ -90,20 +93,30 @@ export function InfoTask() {
 	}
 
 	function handleUpdateCurrentTask({ title, description }: TaskDTO) {
+		setIsLoading(true);
 		firestore()
 			.collection('tasks')
 			.doc(currentTask.id)
 			.update({
 				title,
 				description,
-				date: newDate.toLocaleDateString('pt-BR'),
+				date: moment(newDate).format('DD/MM/YYYY'),
 			})
 			.then(() => {
 				navigation.goBack();
+				setIsLoading(false);
 				toast.show({
 					title: 'Tarefa atualizado com sucesso',
 					placement: 'top',
 					bgColor: 'green.500',
+				});
+			})
+			.catch((error) => {
+				setIsLoading(false);
+				return toast.show({
+					title: 'Não foi possível atualizar a tarefa',
+					placement: 'top',
+					bgColor: 'red.500',
 				});
 			});
 	}
@@ -213,7 +226,7 @@ export function InfoTask() {
 
 					<Input
 						placeholder="Data"
-						value={String(newDate.toLocaleDateString('pt-BR'))}
+						value={moment(newDate).format('DD/MM/YYYY')}
 						onPressIn={() => setOpen(editTask)}
 						InputRightElement={
 							<Icon

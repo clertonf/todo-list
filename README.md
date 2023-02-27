@@ -52,6 +52,9 @@ Desafio elaborado pela Doctuz, cujo a finalidade é desenvolver um To-do list em
 - [react-native-date-picker](https://github.com/henninghall/react-native-date-picker):
   É um componente selecionador de data para React Native.
 
+- [Moment](https://momentjs.com/):
+  É uma biblioteca utilizada para manipular datas.
+
 ---
 
 ## 💬 Bibliotecas utilizadas para desenvolvimento
@@ -141,8 +144,21 @@ Desafio elaborado pela Doctuz, cujo a finalidade é desenvolver um To-do list em
 
 ---
 
-# 💬 Configure seu Git
-
-1. É necessário modificar suas configurações do Git, para que fique o email do Lead nas suas configurações, para quando for fazer commits e demais modificações no projeto, faça com o e-mail do Lead. Pode ser seguido esse tutorial: [pasta](https://git-scm.com/book/pt-br/v2/Come%C3%A7ando-Configura%C3%A7%C3%A3o-Inicial-do-Git).
-
 ---
+
+## 🧪 Executando testes na aplicação
+
+1. Abra o projeto no VSCode
+2. Entre na branch
+
+   Vá para a branch de desenvolvimento:
+
+   > `$ git checkout develop`
+
+3. No terminal, na raiz do projeto, baixe as dependências:
+
+   > `$ yarn`
+
+4. Logo após baixar as dependências, executar o seguinte comando:
+
+   > `$ yarn test`

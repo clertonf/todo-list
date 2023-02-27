@@ -64,6 +64,7 @@ export function SignUp() {
 			.createUserWithEmailAndPassword(email, password)
 			.then(() => {
 				signIn(email, password);
+				setIsLoading(false);
 				return toast.show({
 					title: 'Usuário criado com sucesso',
 					placement: 'top',
@@ -72,6 +73,7 @@ export function SignUp() {
 			})
 			.catch((error) => {
 				if (error.code === 'auth/email-already-in-use') {
+					setIsLoading(false);
 					return toast.show({
 						title: 'E-mail já está sendo usado',
 						placement: 'top',
@@ -80,22 +82,14 @@ export function SignUp() {
 				}
 
 				if (error.code === 'auth/invalid-email') {
+					setIsLoading(false);
 					return toast.show({
 						title: 'E-mail inválido',
 						placement: 'top',
 						bgColor: 'red.500',
 					});
 				}
-
-				if (error.code === 'auth/weak-password') {
-					return toast.show({
-						title: 'Senha deve ter ao menos 6 dígitos',
-						placement: 'top',
-						bgColor: 'red.500',
-					});
-				}
 			});
-		setIsLoading(false);
 	}
 
 	return (

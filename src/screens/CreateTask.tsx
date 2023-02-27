@@ -21,6 +21,9 @@ import { Header } from '@components/Header';
 import { TaskDTO } from '@dtos/TaskDTO';
 import { useAuth } from '@hooks/useAuth';
 
+import moment from 'moment';
+import 'moment/locale/pt';
+
 const signUpSchema = yup.object({
 	title: yup
 		.string()
@@ -57,11 +60,12 @@ export function CreateTask() {
 			.add({
 				title,
 				description,
-				date: newDate.toLocaleDateString('pt-BR'),
+				date: moment(newDate).format('DD/MM/YYYY'),
 				userUid: user.uid,
 			})
 			.then(() => {
 				navigation.goBack();
+				setIsLoading(false);
 				return toast.show({
 					title: 'Tarefa adicionada com sucesso',
 					placement: 'top',
@@ -69,13 +73,13 @@ export function CreateTask() {
 				});
 			})
 			.catch((error) => {
+				setIsLoading(false);
 				return toast.show({
 					title: 'Não foi possível registrar uma nova tarefa',
 					placement: 'top',
 					bgColor: 'red.500',
 				});
 			});
-		setIsLoading(false);
 	}
 
 	return (
@@ -164,7 +168,7 @@ export function CreateTask() {
 
 					<Input
 						placeholder="Data"
-						value={String(newDate.toLocaleDateString('pt-BR'))}
+						value={moment(newDate).format('DD/MM/YYYY')}
 						onPressIn={() => setOpen(true)}
 						InputRightElement={
 							<Icon
